@@ -1,7 +1,8 @@
 {
   "nodeModulesDir": "auto",
   "tasks": {
-    "dev": "playwright install && deno run --env-file=.env --allow-all --watch --unstable-kv --unstable-temporal --unstable-cron src/main.ts",
+    "install": "playwright install",
+    "dev": "deno run --env-file=.env --allow-all --watch --unstable-kv --unstable-temporal --unstable-cron src/main.ts",
     "fmt": "deno fmt ./**/*.ts --ignore=node_modules",
     "pre-commit": "deno install && deno check src/server.ts && deno run fmt"
   },
