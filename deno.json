@@ -1,0 +1,19 @@
+{
+  "nodeModulesDir": "auto",
+  "tasks": {
+    "dev": "playwright install && deno run --env-file=.env --allow-all --watch --unstable-kv --unstable-temporal --unstable-cron src/main.ts",
+    "fmt": "deno fmt ./**/*.ts --ignore=node_modules",
+    "pre-commit": "deno install && deno check src/server.ts && deno run fmt"
+  },
+  "imports": {
+    "@dx/inject": "jsr:@dx/inject@^0.1.17",
+    "es-toolkit": "npm:es-toolkit@^1.27.0",
+    "ora": "npm:ora@^8.1.1",
+    "playwright": "npm:playwright@^1.49.1"
+  },
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "strict": true
+  }
+}
