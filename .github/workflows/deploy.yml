@@ -24,7 +24,8 @@ jobs:
           deno-version: v2.x
 
       - name: Build step
-        run: "playwright install"
+        uses: mikeal/npx@master
+        args: "playwright install"
 
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
