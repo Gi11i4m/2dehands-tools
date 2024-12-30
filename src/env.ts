@@ -1,7 +1,6 @@
 import { difference, memoize } from "es-toolkit";
 
 export const envKeys = [
-  "LOCAL",
   "TWEEDEHANDS_USER",
   "TWEEDEHANDS_PASS",
 ] as const;
@@ -22,6 +21,3 @@ export const env: () => Env = memoize(() => {
   }
   return env as Env;
 });
-
-// Helpers
-export const isLocal = () => JSON.parse(env().LOCAL) as boolean;
