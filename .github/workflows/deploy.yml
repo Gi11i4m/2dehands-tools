@@ -1,9 +1,11 @@
 name: Deploy
 on:
   push:
-    branches: main
+    branches:
+      - main
   pull_request:
-    branches: main
+    branches:
+      - main
 
 jobs:
   deploy:
@@ -23,9 +25,13 @@ jobs:
         with:
           deno-version: v2.x
 
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.9.0
+
       - name: Build step
-        uses: mikeal/npx@master
-        args: "playwright install"
+        run: "playwright install"
 
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
