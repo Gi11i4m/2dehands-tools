@@ -31,7 +31,7 @@ jobs:
           node-version: 20.9.0
 
       - name: Build step
-        run: "playwright install"
+        run: "npx playwright install"
 
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
