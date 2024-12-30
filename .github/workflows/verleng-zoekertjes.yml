@@ -12,21 +12,27 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy:
-    name: Deploy
+  run:
+    name: Run
     runs-on: ubuntu-latest
 
     steps:
       - name: Clone repository
         uses: actions/checkout@v4
 
+      - name: Install Node
+        uses: actions/setup-node@v3
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
       - name: Install Deno
         uses: denoland/setup-deno@v2
         with:
           deno-version: v2.x
 
-      - name: Download browsers
-        run: "deno install && deno run install"
-
       - name: Run
+        env:
+          TWEEDEHANDS_USER: ${{ secrets.TWEEDEHANDS_USER }}
+          TWEEDEHANDS_PASS: ${{ secrets.TWEEDEHANDS_PASS }}
         run: "deno run start"
