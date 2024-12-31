@@ -59,9 +59,12 @@ export class TweedehandsPlaywrightClient {
   private async open2dehandsAndAcceptCookies() {
     const page = await this.getOrInitPage();
     await page.goto(this.url);
-    await page.frameLocator(`iframe[title="SP Consent Message"]`).locator(
-      'button[title="Accepteren"]',
-    ).click();
+    const cookieIframeLocator = `iframe[title="SP Consent Message"]`;
+    if (await page.locator(cookieIframeLocator).isVisible()) {
+      await page.frameLocator(cookieIframeLocator).locator(
+        'button[title="Accepteren"]',
+      ).click();
+    }
   }
 
   private async login() {
