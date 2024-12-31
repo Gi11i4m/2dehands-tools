@@ -41,7 +41,9 @@ export class TweedehandsPlaywrightClient {
         },
       );
     } catch (error) {
-      console.error(error);
+      const page = await this.getOrInitPage();
+      await page.screenshot({ path: "screenshot.png" });
+      throw error;
     } finally {
       await this.browser?.close();
     }

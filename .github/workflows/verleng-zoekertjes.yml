@@ -36,3 +36,10 @@ jobs:
           TWEEDEHANDS_USER: ${{ secrets.TWEEDEHANDS_USER }}
           TWEEDEHANDS_PASS: ${{ secrets.TWEEDEHANDS_PASS }}
         run: "deno run start"
+
+      - name: Upload screenshot
+        uses: actions/upload-artifact@v4
+        with:
+          path: screenshot.png
+          name: Screenshot
+          if-no-files-found: 'ignore'
