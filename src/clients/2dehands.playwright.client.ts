@@ -42,7 +42,14 @@ export class TweedehandsPlaywrightClient {
       );
     } catch (error) {
       const page = await this.getOrInitPage();
-      await page.screenshot({ path: "screenshot.png" });
+      await this.progress.exec(
+        () => page.screenshot({ path: "screenshot.png" }),
+        {
+          color: "red",
+          text: "🖨️ Screenshot maken...",
+          postFn: () => console.log("📸 Screenshot opgeslagen"),
+        },
+      );
       throw error;
     } finally {
       await this.browser?.close();

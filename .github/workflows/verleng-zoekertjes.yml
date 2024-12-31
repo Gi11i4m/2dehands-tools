@@ -39,7 +39,7 @@ jobs:
 
       - name: Upload screenshot
         uses: actions/upload-artifact@v4
+        if: failure()
         with:
           path: screenshot.png
           name: Screenshot
-          if-no-files-found: 'ignore'
