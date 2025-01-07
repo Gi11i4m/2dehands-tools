@@ -1,4 +1,12 @@
 import { bootstrap } from "@dx/inject";
 import { Server } from "./server.ts";
 
-await bootstrap(Server).run();
+const server = bootstrap(Server);
+
+server.serve();
+
+Deno.cron(
+  "Vernieuw zoekertjes elke nacht",
+  "0 0 * * *",
+  async () => await server.run(),
+);

@@ -3,6 +3,7 @@ import { difference, memoize } from "es-toolkit";
 export const envKeys = [
   "TWEEDEHANDS_USER",
   "TWEEDEHANDS_PASS",
+  "TWEEDEHANDS_TOOLS_API_KEY",
 ] as const;
 
 export type Env = {

@@ -2,7 +2,19 @@
   "version": "4",
   "specifiers": {
     "jsr:@dx/inject@~0.1.17": "0.1.17",
+    "jsr:@oneday/http-status@0.2": "0.2.0",
+    "jsr:@std/cli@^1.0.8": "1.0.9",
+    "jsr:@std/encoding@^1.0.5": "1.0.6",
+    "jsr:@std/fmt@^1.0.3": "1.0.3",
+    "jsr:@std/html@^1.0.3": "1.0.3",
+    "jsr:@std/http@0": "0.224.5",
+    "jsr:@std/http@^1.0.12": "1.0.12",
     "jsr:@std/internal@^1.0.4": "1.0.4",
+    "jsr:@std/media-types@^1.1.0": "1.1.0",
+    "jsr:@std/net@^1.0.4": "1.0.4",
+    "jsr:@std/path@^1.0.8": "1.0.8",
+    "jsr:@std/streams@^1.0.8": "1.0.8",
+    "jsr:@udibo/http-error@~0.8.2": "0.8.2",
     "npm:es-toolkit@^1.27.0": "1.27.0",
     "npm:ora@8.1.1": "8.1.1",
     "npm:ora@^8.1.1": "8.1.1",
@@ -18,14 +30,63 @@
         "npm:reflect-metadata@0.2.2"
       ]
     },
+    "@oneday/http-status@0.2.0": {
+      "integrity": "3d0cc33d237ec8c8b355dbbd77e5c45c8335eec7aaffcca4b33220d829e13f42"
+    },
     "@std/assert@1.0.6": {
       "integrity": "1904c05806a25d94fe791d6d883b685c9e2dcd60e4f9fc30f4fc5cf010c72207",
       "dependencies": [
         "jsr:@std/internal"
       ]
     },
+    "@std/cli@1.0.9": {
+      "integrity": "557e5865af000efbf3f737dcfea5b8ab86453594f4a9cd8d08c9fa83d8e3f3bc"
+    },
+    "@std/encoding@1.0.6": {
+      "integrity": "ca87122c196e8831737d9547acf001766618e78cd8c33920776c7f5885546069"
+    },
+    "@std/fmt@1.0.3": {
+      "integrity": "97765c16aa32245ff4e2204ecf7d8562496a3cb8592340a80e7e554e0bb9149f"
+    },
+    "@std/html@1.0.3": {
+      "integrity": "7a0ac35e050431fb49d44e61c8b8aac1ebd55937e0dc9ec6409aa4bab39a7988"
+    },
+    "@std/http@0.224.5": {
+      "integrity": "b03b5d1529f6c423badfb82f6640f9f2557b4034cd7c30655ba5bb447ff750a4"
+    },
+    "@std/http@1.0.12": {
+      "integrity": "85246d8bfe9c8e2538518725b158bdc31f616e0869255f4a8d9e3de919cab2aa",
+      "dependencies": [
+        "jsr:@std/cli",
+        "jsr:@std/encoding",
+        "jsr:@std/fmt",
+        "jsr:@std/html",
+        "jsr:@std/media-types",
+        "jsr:@std/net",
+        "jsr:@std/path",
+        "jsr:@std/streams"
+      ]
+    },
     "@std/internal@1.0.4": {
       "integrity": "62e8e4911527e5e4f307741a795c0b0a9e6958d0b3790716ae71ce085f755422"
+    },
+    "@std/media-types@1.1.0": {
+      "integrity": "c9d093f0c05c3512932b330e3cc1fe1d627b301db33a4c2c2185c02471d6eaa4"
+    },
+    "@std/net@1.0.4": {
+      "integrity": "2f403b455ebbccf83d8a027d29c5a9e3a2452fea39bb2da7f2c04af09c8bc852"
+    },
+    "@std/path@1.0.8": {
+      "integrity": "548fa456bb6a04d3c1a1e7477986b6cffbce95102d0bb447c67c4ee70e0364be"
+    },
+    "@std/streams@1.0.8": {
+      "integrity": "b41332d93d2cf6a82fe4ac2153b930adf1a859392931e2a19d9fabfb6f154fb3"
+    },
+    "@udibo/http-error@0.8.2": {
+      "integrity": "db400c3d169f308b64b7349875b164562f947eb08a9079d3a1da41f53e034907",
+      "dependencies": [
+        "jsr:@std/http@0"
+      ]
     }
   },
   "npm": {
@@ -159,11 +220,15 @@
     "https://deno.land/std@0.69.0/io/bufio.ts": "e76c5b7bf978a638aae6f62b87efde3ab7203b85902ce9b84ac8388c8c2bb104",
     "https://deno.land/std@0.69.0/textproto/mod.ts": "ebd84342f62216af1850279d32581c51d0958e36d477c6c26c961987e6240356",
     "https://deno.land/x/http_errors@3.0.0/deps.ts": "7fcd181f9577e1803297e42cdb58ce219d9c7087391b1e9ccc12537e23b9d68c",
-    "https://deno.land/x/http_errors@3.0.0/mod.ts": "6549778cb6616cd16884dd1f46b28211fc8ac33f9d7141e92a8eaffb48391bc1"
+    "https://deno.land/x/http_errors@3.0.0/mod.ts": "6549778cb6616cd16884dd1f46b28211fc8ac33f9d7141e92a8eaffb48391bc1",
+    "https://deno.land/x/jose@v4.4.0/runtime/timing_safe_equal.ts": "fc5b3f4132cec56630eac4677fef2b519707a9c6a257f8ae86515b0d86ff5f6b"
   },
   "workspace": {
     "dependencies": [
       "jsr:@dx/inject@~0.1.17",
+      "jsr:@oneday/http-status@0.2",
+      "jsr:@std/http@^1.0.12",
+      "jsr:@udibo/http-error@~0.8.2",
       "npm:es-toolkit@^1.27.0",
       "npm:ora@^8.1.1",
       "npm:playwright@^1.49.1"

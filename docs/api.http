@@ -1,0 +1,6 @@
+### POST two factor authentication code
+POST {{url}}/two_factor
+Authorization: {{apiKey}}
+Content-Type: application/json
+
+7448344
