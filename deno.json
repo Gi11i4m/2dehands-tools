@@ -2,10 +2,10 @@
   "nodeModulesDir": "auto",
   "tasks": {
     "install": "playwright install",
-    "dev": "deno run --env-file=.env --allow-all --watch --unstable-kv --unstable-temporal --unstable-cron src/main.ts",
-    "start": "deno run --env-file=.env --allow-all --unstable-kv --unstable-temporal --unstable-cron src/main.ts",
+    "dev": "deno run --env-file=.env --allow-all --watch --unstable-kv --unstable-temporal --unstable-cron src/run.ts",
+    "start": "deno run --env-file=.env --allow-all --unstable-kv --unstable-temporal --unstable-cron src/run.ts",
     "fmt": "deno fmt ./**/*.ts --ignore=node_modules",
-    "pre-commit": "deno install && deno check src/server.ts && deno run fmt"
+    "pre-commit": "deno install && deno check src/run.ts && deno run fmt"
   },
   "imports": {
     "@dx/inject": "jsr:@dx/inject@^0.1.17",
