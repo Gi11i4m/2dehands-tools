@@ -35,6 +35,9 @@ jobs:
         env:
           TWEEDEHANDS_USER: ${{ secrets.TWEEDEHANDS_USER }}
           TWEEDEHANDS_PASS: ${{ secrets.TWEEDEHANDS_PASS }}
+          TWEEDEHANDS_TOOLS_API_KEY: ${{ secrets.TWEEDEHANDS_TOOLS_API_KEY }}
+          DENO_KV_URL: ${{ secrets.DENO_KV_URL }}
+          DENO_KV_ACCESS_TOKEN: ${{ secrets.DENO_KV_ACCESS_TOKEN }}
         run: "deno run start"
 
       - name: Upload screenshot

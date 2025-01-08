@@ -4,6 +4,8 @@ export const envKeys = [
   "TWEEDEHANDS_USER",
   "TWEEDEHANDS_PASS",
   "TWEEDEHANDS_TOOLS_API_KEY",
+  "DENO_KV_URL",
+  "DENO_KV_ACCESS_TOKEN",
 ] as const;
 
 export type Env = {

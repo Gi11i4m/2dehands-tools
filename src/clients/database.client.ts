@@ -1,4 +1,5 @@
 import { Injectable } from "@dx/inject";
+import { env } from "../env.ts";
 
 export type DbKey = "twoFactorCode";
 
@@ -8,7 +9,7 @@ export class DatabaseClient {
 
   async getDb() {
     if (!this.db) {
-      this.db = await Deno.openKv();
+      this.db = await Deno.openKv(env().DENO_KV_URL);
     }
     return this.db;
   }
