@@ -1,0 +1,19 @@
+{
+  "name": "2dehands tools",
+  "version": "1.0",
+  "manifest_version": 3,
+  "description": "2dehands tools",
+  "content_scripts": [
+    {
+      "matches": ["https://mail.google.com/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "action": {
+    "default_popup": "2dehands.html",
+    "default_icon": "assets/2dehands.png"
+  },
+  "icons": {
+    "128": "assets/2dehands.png"
+  }
+}
