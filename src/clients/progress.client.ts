@@ -15,7 +15,7 @@ export class ProgressClient {
     fn: () => Promise<R>,
     { color, text, postFn }: ProgressOptions<R>,
   ) {
-    this.color(color || "cyan").text(text || "⏳ Working...");
+    this.color(color || "cyan").text(text + "..." || "⏳ Working...");
     const result = await fn();
     this.stop();
     if (postFn) postFn(result);

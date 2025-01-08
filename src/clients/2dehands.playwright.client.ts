@@ -28,16 +28,22 @@ export class TweedehandsPlaywrightClient {
     try {
       await this.progress.exec(() => this.open2dehandsAndAcceptCookies(), {
         color: "yellow",
-        text: "🍪 Cookies accepteren...",
+        text: "🍪 Cookies accepteren",
       });
       await this.progress.exec(() => this.login(), {
-        text: "👤 Inloggen...",
+        text: "👤 Inloggen",
+      });
+      await this.progress.exec(() => this.waitForTwoFactor(), {
+        text: "📲 Wachten op 2-factor",
+      });
+      await this.progress.exec(() => this.verifyLogin(), {
+        text: "👨‍💻 Checken of login gelukt is",
       });
       await this.progress.exec(
         () => this.verlengBijnaVerlopenZoekertjes(),
         {
           color: "green",
-          text: "🖱️ Zoekertjes verlengen...",
+          text: "♻️ Zoekertjes verlengen",
           postFn: (amount) =>
             console.log(
               `✅ ${amount} zoekertje${amount === 1 ? "" : "s"} verlengd!`,
@@ -50,7 +56,7 @@ export class TweedehandsPlaywrightClient {
         () => page.screenshot({ path: "screenshot.png" }),
         {
           color: "red",
-          text: "🖨️ Screenshot maken...",
+          text: "🖨️ Screenshot maken",
           postFn: () => console.log("📸 Screenshot opgeslagen"),
         },
       );
@@ -73,15 +79,23 @@ export class TweedehandsPlaywrightClient {
 
   private async login() {
     const page = await this.getOrInitPage();
-    await page.locator(`[data-role="login"]`).click();
+    await page.goto(`${this.url}/identity/v2/login`);
     await page.locator(`input[id="email"]`).fill(env().TWEEDEHANDS_USER);
     await page.locator(`input[id="password"]`).fill(env().TWEEDEHANDS_PASS);
     await page.locator(`button:has-text("Inloggen met je e-mailadres")`)
       .click();
+  }
+
+  private async waitForTwoFactor() {
+    const page = await this.getOrInitPage();
     if (await page.locator(`div[id="two-factor-auth-app-root"]`).isVisible()) {
       const twoFactorCode = await this.waitForAndRemoveTwoFactorCode();
       await this.enterTwoFactorCode(twoFactorCode);
     }
+  }
+
+  private async verifyLogin() {
+    const page = await this.getOrInitPage();
     await page.locator(`span`).getByText("Gilliam Flebus").isVisible();
   }
 
