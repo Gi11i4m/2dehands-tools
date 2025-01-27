@@ -14,7 +14,9 @@
     "@udibo/http-error": "jsr:@udibo/http-error@^0.8.2",
     "es-toolkit": "npm:es-toolkit@^1.27.0",
     "ora": "npm:ora@^8.1.1",
-    "playwright": "npm:playwright@^1.49.1"
+    "playwright": "npm:playwright@^1.49.1",
+    "matrix-js-sdk": "npm:matrix-js-sdk@^35.1.0",
+    "typescript-memoize": "npm:typescript-memoize@^1.1.1"
   },
   "compilerOptions": {
     "experimentalDecorators": true,

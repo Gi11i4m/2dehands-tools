@@ -1,9 +1,13 @@
 import { difference, memoize } from "es-toolkit";
 
 export const envKeys = [
+  "HEADLESS",
   "TWEEDEHANDS_USER",
   "TWEEDEHANDS_PASS",
   "TWEEDEHANDS_TOOLS_API_KEY",
+  "MATRIX_URL",
+  "MATRIX_USER",
+  "MATRIX_PASS",
   "DENO_KV_URL",
   "DENO_KV_ACCESS_TOKEN",
 ] as const;
@@ -24,3 +28,7 @@ export const env: () => Env = memoize(() => {
   }
   return env as Env;
 });
+
+export function isHeadless() {
+  return env().HEADLESS === "true";
+}
