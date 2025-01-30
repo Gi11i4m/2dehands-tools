@@ -104,7 +104,7 @@ export class TweedehandsPlaywrightClient {
   }
 
   private async waitForTwoFactor() {
-    const page = await this.getOrInitPage();
+    const page = await this.getOrInitPage(true);
     if (await page.locator(`div[id="two-factor-auth-app-root"]`).isVisible()) {
       const twoFactorCode = await this.waitForTwoFactorCode();
       await this.enterTwoFactorCode(twoFactorCode);
