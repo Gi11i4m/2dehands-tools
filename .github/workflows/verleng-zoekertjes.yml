@@ -24,7 +24,9 @@ jobs:
         uses: actions/setup-node@v3
 
       - name: Install Playwright browsers
-        run: npx playwright install --with-deps
+        run: |
+          npm install
+          npx playwright install --with-deps
 
       - name: Install Deno
         uses: denoland/setup-deno@v2
