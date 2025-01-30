@@ -33,9 +33,13 @@ jobs:
 
       - name: Run
         env:
+          HEADLESS: true
           TWEEDEHANDS_USER: ${{ secrets.TWEEDEHANDS_USER }}
           TWEEDEHANDS_PASS: ${{ secrets.TWEEDEHANDS_PASS }}
           TWEEDEHANDS_TOOLS_API_KEY: ${{ secrets.TWEEDEHANDS_TOOLS_API_KEY }}
+          MATRIX_URL: ${{ secrets.MATRIX_URL }}
+          MATRIX_USER: ${{ secrets.MATRIX_USER }}
+          MATRIX_PASS: ${{ secrets.MATRIX_PASS }}
           DENO_KV_URL: ${{ secrets.DENO_KV_URL }}
           DENO_KV_ACCESS_TOKEN: ${{ secrets.DENO_KV_ACCESS_TOKEN }}
         run: "deno run start"

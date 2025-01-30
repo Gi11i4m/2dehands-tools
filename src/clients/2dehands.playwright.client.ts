@@ -112,6 +112,7 @@ export class TweedehandsPlaywrightClient {
   }
 
   private async waitForTwoFactorCode() {
+    await this.matrix.sync();
     const message = await this.matrix.listenForNextMessage();
     console.log(`=== MESSAGE ===`);
     console.log(message);
@@ -142,7 +143,7 @@ export class TweedehandsPlaywrightClient {
   private async verlengBijnaVerlopenZoekertjes() {
     const page = await this.getOrInitPage();
     await this.getUserButton(page).click();
-    await this.page!.locator(`a[data-role="mymp-myAds"]`).click();
+    await this.page!.locator(`a[data-role="mymp-myAds"]`).first().click();
     const allVerlengenButtons = await page.locator(`a[href="#verlengen"]`)
       .all();
     await Promise.all(allVerlengenButtons.map((button) => button.click()));

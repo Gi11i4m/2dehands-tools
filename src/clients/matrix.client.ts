@@ -27,7 +27,7 @@ export class MatrixClient {
   }
 
   async listenForNextMessage(): Promise<string> {
-    await this.client.startClient({ initialSyncLimit: 10 });
+    await this.client.startClient();
     return new Promise((resolve) =>
       this.client.on(RoomEvent.Timeline, (event) => {
         if (event.getType() === "m.room.message") {

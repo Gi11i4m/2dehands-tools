@@ -30,5 +30,5 @@ export const env: () => Env = memoize(() => {
 });
 
 export function isHeadless() {
-  return env().HEADLESS === "true";
+  return env().HEADLESS !== "false";
 }
