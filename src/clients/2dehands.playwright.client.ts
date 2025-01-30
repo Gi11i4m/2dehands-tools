@@ -17,12 +17,12 @@ export class TweedehandsPlaywrightClient {
     private readonly matrix: MatrixClient,
   ) {}
 
-  async getOrInitPage(skipLoginCheck = false) {
+  async getOrInitPage(skipLoginCheck = false): Promise<Page> {
     if (this.page) {
       if (!skipLoginCheck) {
         await this.getUserButton(this.page).waitFor({
           state: "visible",
-          timeout: 30000,
+          timeout: 10000,
         });
       }
       return this.page;
@@ -73,7 +73,7 @@ export class TweedehandsPlaywrightClient {
   }
 
   private async takeScreenshot() {
-    const page = await this.getOrInitPage();
+    const page = await this.getOrInitPage(true);
     await page.screenshot({ path: "screenshot.png" });
   }
 
@@ -99,7 +99,7 @@ export class TweedehandsPlaywrightClient {
       .click();
     await this.getUserButton(page).waitFor({
       state: "visible",
-      timeout: 10000,
+      timeout: 10001,
     });
   }
 
@@ -135,7 +135,7 @@ export class TweedehandsPlaywrightClient {
   }
 
   private async enterTwoFactorCode(code: string) {
-    const page = await this.getOrInitPage();
+    const page = await this.getOrInitPage(true);
     await Promise.all(
       code.split("").map((letter, index) =>
         page.locator(`input[data-testid="otp-input-${index}"]`).fill(letter)
