@@ -22,7 +22,7 @@ export class TweedehandsPlaywrightClient {
       if (!skipLoginCheck) {
         await this.getUserButton(this.page).waitFor({
           state: "visible",
-          timeout: 10000,
+          timeout: 30000,
         });
       }
       return this.page;
@@ -58,9 +58,8 @@ export class TweedehandsPlaywrightClient {
         },
       );
     } catch (error) {
-      const page = await this.getOrInitPage();
       await this.progress.exec(
-        () => page.screenshot({ path: "screenshot.png" }),
+        () => this.takeScreenshot(),
         {
           color: "red",
           text: "🖨️ Screenshot maken",
@@ -71,6 +70,11 @@ export class TweedehandsPlaywrightClient {
     } finally {
       await this.browser?.close();
     }
+  }
+
+  private async takeScreenshot() {
+    const page = await this.getOrInitPage();
+    await page.screenshot({ path: "screenshot.png" });
   }
 
   private async open2dehandsAndAcceptCookies() {
