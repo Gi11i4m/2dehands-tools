@@ -35,6 +35,10 @@ export class TweedehandsPlaywrightClient {
   }
 
   async verlengZoekertjes() {
+    console.log("Listening for messages");
+    await this.waitForTwoFactorCode();
+    return;
+
     try {
       await this.progress.exec(() => this.open2dehandsAndAcceptCookies(), {
         color: "yellow",
@@ -117,7 +121,9 @@ export class TweedehandsPlaywrightClient {
 
   private async waitForTwoFactorCode() {
     await this.matrix.sync();
-    const message = await this.matrix.listenForNextMessage();
+    const message = await this.matrix.listenForNextMessageFrom(
+      "@gmessages_2.190:beeper.local",
+    );
     console.log(`=== MESSAGE ===`);
     console.log(message);
     console.log(`=== === === ===`);

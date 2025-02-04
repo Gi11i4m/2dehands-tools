@@ -26,15 +26,28 @@ export class MatrixClient {
     );
   }
 
-  async listenForNextMessage(): Promise<string> {
+  async listenForNextMessageFrom(userId: string): Promise<string> {
     await this.client.startClient();
-    return new Promise((resolve) =>
-      this.client.on(RoomEvent.Timeline, (event) => {
+    return new Promise((resolve, reject) => {
+      const tweedehandsRoom = this.client.getRooms().find((room) =>
+        room.getMembers().find((member) => member.userId === userId)
+      );
+      if (!tweedehandsRoom) {
+        return reject(`You have no chats with member ${userId}`);
+      }
+      // tweedehandsRoom.addEventsToTimeline([{ }], false, false, tweedehandsRoom.getLiveTimeline())
+      tweedehandsRoom.on(RoomEvent.Timeline, (event) => {
         if (event.getType() === "m.room.message") {
           resolve(event.event.content!.body);
           this.client.stopClient();
         }
-      })
-    );
+      });
+      // this.client.on(RoomEvent.Timeline, (event) => {
+      //   if (event.getType() === "m.room.message") {
+      //     resolve(event.event.content!.body);
+      //     this.client.stopClient();
+      //   }
+      // });
+    });
   }
 }
