@@ -22,6 +22,8 @@ jobs:
 
       - name: Install Node
         uses: actions/setup-node@v3
+        with:
+          - cache: pnpm
 
       - name: Install Deno
         uses: denoland/setup-deno@v2

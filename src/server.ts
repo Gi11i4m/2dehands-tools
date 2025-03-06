@@ -6,6 +6,7 @@ import { env } from "./env.ts";
 import { flow } from "es-toolkit";
 import { TwoFactorHandler } from "./handlers/two-factor.handler.ts";
 import { HTTPStatus } from "@oneday/http-status";
+import "fake-indexeddb/auto";
 
 @Bootstrapped()
 export class Server {
