@@ -1,4 +1,4 @@
-import { bootstrap } from "@dx/inject";
-import { Server } from "./server.ts";
+import "fake-indexeddb/auto";
+import { tweedehandsPlaywrightClient } from "./clients/2dehands.playwright.client";
 
-await bootstrap(Server).run();
+void tweedehandsPlaywrightClient.verlengZoekertjes();

@@ -1,11 +1,8 @@
-import { Injectable } from "@dx/inject";
-import { env, isHeadless } from "../env.ts";
+import { env, isHeadless } from "../env";
 import { Browser, Page, webkit } from "playwright";
-import { ProgressClient } from "./progress.client.ts";
-import { DatabaseClient } from "./database.client.ts";
-import { MatrixClient } from "./matrix.client.ts";
+import { progressClient, ProgressClient } from "./progress.client";
+import { matrixClient, MatrixClient } from "./matrix.client";
 
-@Injectable()
 export class TweedehandsPlaywrightClient {
   private readonly url = "https://www.2dehands.be";
   private browser?: Browser;
@@ -13,7 +10,6 @@ export class TweedehandsPlaywrightClient {
 
   constructor(
     private readonly progress: ProgressClient,
-    private readonly db: DatabaseClient,
     private readonly matrix: MatrixClient,
   ) {}
 
@@ -50,26 +46,20 @@ export class TweedehandsPlaywrightClient {
       await this.progress.exec(() => this.waitForTwoFactor(), {
         text: "📲 Wachten op 2-factor",
       });
-      await this.progress.exec(
-        () => this.verlengBijnaVerlopenZoekertjes(),
-        {
-          color: "green",
-          text: "♻️ Zoekertjes verlengen",
-          postFn: (amount) =>
-            console.log(
-              `✅ ${amount} zoekertje${amount === 1 ? "" : "s"} verlengd!`,
-            ),
-        },
-      );
+      await this.progress.exec(() => this.verlengBijnaVerlopenZoekertjes(), {
+        color: "green",
+        text: "♻️ Zoekertjes verlengen",
+        postFn: (amount) =>
+          console.log(
+            `✅ ${amount} zoekertje${amount === 1 ? "" : "s"} verlengd!`,
+          ),
+      });
     } catch (error) {
-      await this.progress.exec(
-        () => this.takeScreenshot(),
-        {
-          color: "red",
-          text: "🖨️ Screenshot maken",
-          postFn: () => console.log("📸 Screenshot opgeslagen"),
-        },
-      );
+      await this.progress.exec(() => this.takeScreenshot(), {
+        color: "red",
+        text: "🖨️ Screenshot maken",
+        postFn: () => console.log("📸 Screenshot opgeslagen"),
+      });
       throw error;
     } finally {
       await this.browser?.close();
@@ -86,9 +76,10 @@ export class TweedehandsPlaywrightClient {
     await page.goto(this.url);
     const cookieIframeLocator = `iframe[title="SP Consent Message"]`;
     if (await page.locator(cookieIframeLocator).isVisible()) {
-      await page.frameLocator(cookieIframeLocator).locator(
-        'button[title="Accepteren"]',
-      ).click();
+      await page
+        .frameLocator(cookieIframeLocator)
+        .locator('button[title="Accepteren"]')
+        .click();
     }
     // Saving cookie preferences needs a bit of time
     await new Promise((resolve) => setTimeout(resolve, 3000));
@@ -99,7 +90,8 @@ export class TweedehandsPlaywrightClient {
     await page.goto(`${this.url}/identity/v2/login`);
     await page.locator(`input[id="email"]`).fill(env().TWEEDEHANDS_USER);
     await page.locator(`input[id="password"]`).fill(env().TWEEDEHANDS_PASS);
-    await page.locator(`button:has-text("Inloggen met je e-mailadres")`)
+    await page
+      .locator(`button:has-text("Inloggen met je e-mailadres")`)
       .click();
     await this.getUserButton(page).waitFor({
       state: "visible",
@@ -120,32 +112,27 @@ export class TweedehandsPlaywrightClient {
   }
 
   private async waitForTwoFactorCode() {
-    await this.matrix.sync();
+    await this.matrix.init();
     const message = await this.matrix.listenForNextMessageFrom(
-      "@gmessages_2.190:beeper.local",
+      "@gmessages_1.190:beeper.local",
     );
+    // "@gmessagesbot:beeper.local" Google Messages bridge
+    // "@gmessages_1.190:beeper.local" Gilliam?
+    // "@gmessages_1.170:beeper.local" Gilliam
     console.log(`=== MESSAGE ===`);
     console.log(message);
     console.log(`=== === === ===`);
     return message;
-    // return new Promise<string>((resolve) => {
-    //   const intervalId = setInterval(async () => {
-    //     const twoFactorCode = await this.db.getValue<string>("twoFactorCode");
-    //     if (twoFactorCode) {
-    //       clearInterval(intervalId);
-    //       await this.db.setValue("twoFactorCode", undefined);
-    //       resolve(twoFactorCode);
-    //     }
-    //   }, 1000);
-    // });
   }
 
   private async enterTwoFactorCode(code: string) {
     const page = await this.getOrInitPage(true);
     await Promise.all(
-      code.split("").map((letter, index) =>
-        page.locator(`input[data-testid="otp-input-${index}"]`).fill(letter)
-      ),
+      code
+        .split("")
+        .map((letter, index) =>
+          page.locator(`input[data-testid="otp-input-${index}"]`).fill(letter),
+        ),
     );
     await page.locator(`button[class="hz-Button--primary"]`).click();
   }
@@ -154,9 +141,15 @@ export class TweedehandsPlaywrightClient {
     const page = await this.getOrInitPage();
     await this.getUserButton(page).click();
     await this.page!.locator(`a[data-role="mymp-myAds"]`).first().click();
-    const allVerlengenButtons = await page.locator(`a[href="#verlengen"]`)
+    const allVerlengenButtons = await page
+      .locator(`a[href="#verlengen"]`)
       .all();
     await Promise.all(allVerlengenButtons.map((button) => button.click()));
     return allVerlengenButtons.length;
   }
 }
+
+export const tweedehandsPlaywrightClient = new TweedehandsPlaywrightClient(
+  progressClient,
+  matrixClient,
+);

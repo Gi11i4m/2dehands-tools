@@ -1,4 +1,3 @@
-import { Injectable } from "@dx/inject";
 import ora, { Color, Ora } from "ora";
 
 export type ProgressOptions<R = undefined> = {
@@ -7,7 +6,6 @@ export type ProgressOptions<R = undefined> = {
   postFn?: (result: R) => void;
 };
 
-@Injectable()
 export class ProgressClient {
   private ora: Ora = ora();
 
@@ -48,3 +46,5 @@ export class ProgressClient {
     return this;
   }
 }
+
+export const progressClient = new ProgressClient();

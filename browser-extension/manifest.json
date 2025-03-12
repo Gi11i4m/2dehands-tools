@@ -3,12 +3,17 @@
   "version": "1.0",
   "manifest_version": 3,
   "description": "2dehands tools",
+  "host_permissions": ["https://www.2dehands.be/"],
   "content_scripts": [
     {
       "matches": ["https://mail.google.com/*"],
       "js": ["content.js"]
     }
   ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
   "action": {
     "default_popup": "2dehands.html",
     "default_icon": "assets/2dehands.png"

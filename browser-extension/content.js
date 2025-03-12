@@ -11,31 +11,31 @@
 
 /** @returns {Element[]} */
 function getUnread2dehandsMails() {
-  return Array.from(document.getElementsByClassName('zA zE')).filter(mail =>
-    mail.textContent.includes('2dehands')
+  return Array.from(document.getElementsByClassName("zA zE")).filter((mail) =>
+    mail.textContent.includes("2dehands"),
   );
 }
 
 /** @returns {Element[]} */
 function getVerlooptBijna2dehandsMails() {
-  return getUnread2dehandsMails().filter(mail =>
-    mail.textContent.includes('verloopt bijna')
+  return getUnread2dehandsMails().filter((mail) =>
+    mail.textContent.includes("verloopt bijna"),
   );
 }
 
 /** @param mails {Element[]} */
 async function extendAll(mails) {
   await Promise.all(
-    mails.map(mail => {
+    mails.map((mail) => {
       // TODO: Fire POST request to 2dehands to extend Zoekertje
-    })
+    }),
   );
 }
 
 /** @param mails {Element[]} */
 async function deleteAll(mails) {
-  mails.forEach(mail =>
-    mail.querySelector('[data-tooltip="Selecteren"]').click()
+  mails.forEach((mail) =>
+    mail.querySelector('[data-tooltip="Selecteren"]').click(),
   );
   await waitFor(1);
   document.querySelector('[data-tooltip="Verwijderen"]').click();
@@ -64,5 +64,5 @@ function waitUntil(conditionFn) {
 }
 
 function waitFor(seconds) {
-  return new Promise(resolve => setTimeout(resolve, seconds * 1000));
+  return new Promise((resolve) => setTimeout(resolve, seconds * 1000));
 }
