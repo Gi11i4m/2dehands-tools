@@ -9,6 +9,12 @@
       "js": ["content.js"]
     }
   ],
+  "host_permissions": [
+    "https://www.2dehands.be/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
   "action": {
     "default_popup": "2dehands.html",
     "default_icon": "assets/2dehands.png"
