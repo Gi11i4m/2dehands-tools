@@ -1,25 +1,25 @@
 {
-  "name": "2dehands tools",
+  "name": "2dehands",
   "version": "1.0",
   "manifest_version": 3,
   "description": "2dehands tools",
+  "background": {
+    "type": "module",
+    "service_worker": "./src/background.mjs"
+  },
   "content_scripts": [
     {
       "matches": ["https://mail.google.com/*"],
-      "js": ["content.js"]
+      "js": ["./src/content.mjs"]
     }
   ],
-  "host_permissions": [
-    "https://www.2dehands.be/*"
-  ],
-  "background": {
-    "service_worker": "background.js"
-  },
+  "permissions": ["notifications"],
+  "host_permissions": ["https://www.2dehands.be/*"],
   "action": {
-    "default_popup": "2dehands.html",
-    "default_icon": "assets/2dehands.png"
+    "default_popup": "./src/2dehands.html",
+    "default_icon": "./assets/2dehands.png"
   },
   "icons": {
-    "128": "assets/2dehands.png"
+    "128": "./assets/2dehands.png"
   }
 }
