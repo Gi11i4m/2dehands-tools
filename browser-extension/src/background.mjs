@@ -1,12 +1,30 @@
 import { showNotification } from "./notifications.mjs";
-import { loop, ONE_HOUR_IN_MS, TEN_SECONDS_IN_MS } from "./loop.mjs";
-import { getExpiringAds } from "./2dehands.client.mjs";
+import { loop } from "./loop.mjs";
+import { extendAd, getExpiringAds } from "./2dehands.client.mjs";
+import { pluralize } from "./grammar.js";
 
-async function extendAds() {
-  const expiringAds = await getExpiringAds();
-  showNotification(
-    `Je hebt momenteel ${expiringAds.length} bijna verlopen zoekertjes!`,
-  );
+async function checkAndExtendAlmostExpiringAds() {
+  try {
+    const expiringAds = await getExpiringAds();
+
+    console.log(
+      `Je hebt ${expiringAds.length} bijna verlopen ${pluralize("zoekertje", expiringAds.length)}!`,
+    );
+
+    if (expiringAds.length === 0) {
+      return;
+    }
+
+    await Promise.all(expiringAds.map(extendAd));
+    showNotification(
+      `${expiringAds.length} ${pluralize("zoekertje", expiringAds.length)} verlengd!`,
+    );
+  } catch (e) {
+    console.error(e);
+    showNotification(
+      `Verlengen van 2dehands zoekertjes is mislukt! Ben je ingelogd?`,
+    );
+  }
 }
 
-loop(extendAds, ONE_HOUR_IN_MS);
+void loop(checkAndExtendAlmostExpiringAds, 60);

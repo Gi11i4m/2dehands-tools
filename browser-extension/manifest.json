@@ -7,13 +7,7 @@
     "type": "module",
     "service_worker": "./src/background.mjs"
   },
-  "content_scripts": [
-    {
-      "matches": ["https://mail.google.com/*"],
-      "js": ["./src/content.mjs"]
-    }
-  ],
-  "permissions": ["notifications"],
+  "permissions": ["notifications", "alarms"],
   "host_permissions": ["https://www.2dehands.be/*"],
   "action": {
     "default_popup": "./src/2dehands.html",

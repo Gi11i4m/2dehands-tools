@@ -1,13 +1,20 @@
-export const TEN_SECONDS_IN_MS = 10000;
-export const ONE_HOUR_IN_MS = 3600000;
+const ALARM_NAME = "2dehands-tools-alarm";
 
 /**
- * Executes a function immediately and then repeatedly at a specified interval.
+ * Executes a function immediately and then repeatedly at a specified interval, using the chrome.alarms API.
  *
  * @param {() => void} fn - The function to execute.
- * @param {number} ms - The interval in milliseconds.
+ * @param {number} periodInMinutes - The interval in minutes.
  */
-export function loop(fn, ms) {
+export async function loop(fn, periodInMinutes) {
   fn();
-  setInterval(fn, ms);
+
+  await chrome.alarms.clear(ALARM_NAME);
+  await chrome.alarms.create(ALARM_NAME, { periodInMinutes });
+
+  chrome.alarms.onAlarm.addListener((alarm) => {
+    if (alarm.name === ALARM_NAME) {
+      fn();
+    }
+  });
 }
