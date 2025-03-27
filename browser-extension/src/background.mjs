@@ -7,8 +7,8 @@ async function checkAndExtendAlmostExpiringAds() {
   try {
     const expiringAds = await getExpiringAds();
 
-    console.log(
-      `Je hebt ${expiringAds.length} bijna verlopen ${pluralize("zoekertje", expiringAds.length)}!`,
+    console.info(
+      `🔍 Je hebt ${expiringAds.length} bijna verlopen ${pluralize("zoekertje", expiringAds.length)}!`,
     );
 
     if (expiringAds.length === 0) {
@@ -20,10 +20,10 @@ async function checkAndExtendAlmostExpiringAds() {
       `${expiringAds.length} ${pluralize("zoekertje", expiringAds.length)} verlengd!`,
     );
   } catch (e) {
-    console.error(e);
     showNotification(
-      `Verlengen van 2dehands zoekertjes is mislukt! Ben je ingelogd?`,
+      `❌ Verlengen van 2dehands zoekertjes is mislukt! Ben je ingelogd?`,
     );
+    throw e;
   }
 }
 

@@ -12,7 +12,12 @@ export async function loop(fn, periodInMinutes) {
   await chrome.alarms.clear(ALARM_NAME);
   await chrome.alarms.create(ALARM_NAME, { periodInMinutes });
 
-  chrome.alarms.onAlarm.addListener((alarm) => {
+  chrome.alarms.onAlarm.addListener(async (alarm) => {
+    const idleState = await chrome.idle.queryState(5);
+    if (idleState === "locked") {
+      console.info("🔒 System is locked, not triggering extension");
+    }
+
     if (alarm.name === ALARM_NAME) {
       fn();
     }
