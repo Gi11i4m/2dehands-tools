@@ -48,6 +48,7 @@ export async function getExpiringAds() {
   return ads.filter(({ expiring }) => expiring);
 }
 
+/** @returns {Promise<string>} */
 export async function getXsrfToken() {
   const res = await fetch(`${TWEEDEHANDS_URL}`, {
     method: "GET",
@@ -86,7 +87,7 @@ export async function extendAd({ itemId }) {
 
 function throwIfNotOk(res) {
   if (!res.ok) {
-    console.error(res.statusText);
+    console.error(JSON.stringify(res));
     throw new Error(`${res.status}: ${res.statusText}`);
   }
 }
