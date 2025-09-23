@@ -14,11 +14,9 @@ export async function loop(fn, periodInMinutes) {
 
   chrome.alarms.onAlarm.addListener(async (alarm) => {
     const idleState = (await chrome.idle?.queryState(5)) || "locked";
-    if (idleState === "locked") {
-      console.info("🔒 System is locked, not triggering extension");
-    }
-
-    if (alarm.name === ALARM_NAME) {
+    if (idleState === "locked" || window.navigator.onLine === false) {
+      console.info("🔒 System is locked or offline, not triggering extension");
+    } else if (alarm.name === ALARM_NAME) {
       fn();
     }
   });
